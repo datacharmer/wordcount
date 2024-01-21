@@ -1,0 +1,13 @@
+
+stdin one.txt
+exec wordcount -log-file $WORK/wordcount.log
+stdout '1'
+
+[exists_within_seconds:$WORK/wordcount.log:1] stop 'the test is successful'
+
+# failing the test
+exec cat one.txt
+stdout 'file not found'
+
+-- one.txt --
+abcde

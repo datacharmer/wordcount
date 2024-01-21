@@ -1,0 +1,9 @@
+
+# test custom command 'sleep_for'
+sleep_for 1
+
+# test custom command 'check_files'
+check_files $WORK file1.txt file2.txt
+
+-- file1.txt --
+-- file2.txt --

@@ -1,0 +1,14 @@
+
+# the actual version is passed to this process in the Setup clause of testscript.Params
+exec wordcount -version
+cmpenv stdout version.txt
+
+# test the custom condition about version
+[version_is_at_least:0.2] stop 'this test is satisfied'
+
+# if we use a lower version, we enter this impossible comparison and the test fails
+exec echo 'aaa'
+stdout 'bbb'
+
+-- version.txt --
+$WORDCOUNT_VERSION
