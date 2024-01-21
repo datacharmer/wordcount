@@ -1,0 +1,12 @@
+exec cat data.txt
+stdout 'hello world\n'
+! stderr .
+exec cat dir1/data2.txt
+stdout something
+
+-- data.txt --
+hello world
+
+-- dir1/data2.txt --
+something else
+

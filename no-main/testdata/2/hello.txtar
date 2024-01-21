@@ -1,0 +1,4 @@
+exec echo 'hello world'
+stdout 'h\w+ w\w+'
+! stderr .
+
