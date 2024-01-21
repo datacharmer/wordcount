@@ -1,0 +1,13 @@
+# no input
+exec wordcount
+stdout '0 0 0'
+
+# help
+exec wordcount -h
+! stdout .
+stderr 'bytes'
+stderr 'words'
+stderr 'characters'
+stderr 'lines'
+stderr 'spaces'
+stderr -count=7 'shows number of'
