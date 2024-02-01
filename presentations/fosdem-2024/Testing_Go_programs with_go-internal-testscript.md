@@ -256,7 +256,70 @@ Conditions are enclosed in square brackets
 
 ---
 
+## The transparent executable (1)
 
+```
+exec wordcount -h
+! stdout .
+stderr -count=7 'shows number of'
+```
+
+That `wordcount` is an executable that we want to make sure it exists
+
+^ the `wordcount` command is our main product. We want to test it, and we want to avoid the inconvenience of building it between tests.
+
+---
+
+## The transparent executable (2)
+
+In the test
+
+```go
+func TestMain(m *testing.M) {
+	exitCode := testscript.RunMain(m, map[string]func() int{
+		"wordcount": cmd.RunMain,
+	})
+	os.Exit(exitCode)
+}
+```
+
+^ To make this happen, we use the `TestMain` function, which is a function that runs before any other tests, and in such function we run `testscript.RunMain`, which has among its arguments a map of functions associated to a name. That function returns an int, just like a command line program would.
+
+---
+
+## The transparent executable (3)
+
+In the main
+
+
+```go
+func main() {
+	os.Exit(cmd.RunMain())
+}
+
+
+func RunMain() int {
+	err := runWordCount()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "%s\n", err)
+		return 1
+	}
+	return 0
+}
+```
+
+^ And here's the trick: the function we have associated with the test is also called from the main function. This makes the compiled executable for the test also run as the main executable.
+
+---
+
+## The transparent executable (4)
+
+* There is no separate executable
+* the "executable" that we run in the tests is the compiled form of the test itself.
+
+^ Reminder: Go is a compiled language. When we run the test, we are running an executable that was compiled on-the-fly.
+
+---
 ## [fit] Custom
 ## [fit] commands
 ---
