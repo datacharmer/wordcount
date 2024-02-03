@@ -114,7 +114,7 @@ stdout 'h\w+ w\w+'
 ```
 
 ^ testdata/2/hello.txtar
-The previous example may have suggested what happens here: the argument of both `stdout` and `stdin` are not blunt literal text, but regular expressions.
+The previous example may have suggested what happens here: the argument of both `stdout` and `stderr` are not blunt literal text, but regular expressions.
 
 ---
 ## A modified first example (2)
@@ -283,7 +283,7 @@ func TestMain(m *testing.M) {
 }
 ```
 
-^ To make this happen, we use the `TestMain` function, which is a function that runs before any other tests, and in such function we run `testscript.RunMain`, which has among its arguments a map of functions associated to a name. That function returns an int, just like a command line program would.
+^ To make this happen, we use the `TestMain` function, which is a function that runs before any other tests, and in such function we run `testscript.RunMain`, which has among its arguments a map of functions associated to a name. Each function returns an int, just like a command line program would.
 
 ---
 
